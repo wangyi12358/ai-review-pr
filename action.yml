@@ -1,0 +1,48 @@
+name: 'AI Review PR'
+description: 'Automatically review pull requests using AI'
+author: 'AI Review PR Team'
+
+inputs:
+  github_token:
+    description: 'GitHub token (usually GITHUB_TOKEN)'
+    required: false
+  openai_api_key:
+    description: 'OpenAI API Key'
+    required: true
+  model:
+    description: 'OpenAI model to use (e.g., gpt-4, gpt-3.5-turbo)'
+    required: false
+    default: 'gpt-4'
+  temperature:
+    description: 'Temperature for the AI model (0-1)'
+    required: false
+    default: '0.7'
+  max_tokens:
+    description: 'Maximum tokens for the AI response'
+    required: false
+    default: '2000'
+  review_style:
+    description: 'Review style (e.g., thorough, concise, friendly)'
+    required: false
+    default: 'thorough'
+  ignore_files:
+    description: 'Comma-separated list of file patterns to ignore'
+    required: false
+    default: ''
+  language:
+    description: 'Language for the review comments'
+    required: false
+    default: 'zh-CN'
+
+outputs:
+  review_comments:
+    description: 'Number of review comments generated'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+
+branding:
+  icon: 'message-circle'
+  color: 'blue'
+
