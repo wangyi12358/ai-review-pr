@@ -38,7 +38,7 @@ jobs:
           openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
 ```
 
-> **提示**：`GITHUB_TOKEN` 是 GitHub Actions 自动提供的，无需手动设置。如果省略 `github_token` 参数，代码会自动从环境变量读取。
+> **提示**：`GITHUB_TOKEN` 是 GitHub Actions 自动提供的，无需手动设置。
 
 ### 高级配置
 
@@ -59,8 +59,7 @@ jobs:
       - name: AI Review
         uses: wangyi12358/ai-review-pr@v1
         with:
-          # github_token 可以省略，会自动从环境变量读取
-          # github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
           model: openai/gpt-4
           temperature: 0.7
@@ -79,7 +78,7 @@ jobs:
 | `model` | 模型名称（如 openai/gpt-4, openai/gpt-3.5-turbo, anthropic/claude-3-sonnet）<br>查看 [可用模型列表](https://openrouter.ai/models) | 否 | `openai/gpt-4` |
 | `temperature` | AI 模型的温度参数（0-1） | 否 | `0.7` |
 | `max_tokens` | AI 响应的最大 token 数 | 否 | `2000` |
-| `review_style` | 审查风格（thorough/concis e/friendly/strict） | 否 | `thorough` |
+| `review_style` | 审查风格 | 否 | `thorough` |
 | `ignore_files` | 要忽略的文件模式（逗号分隔） | 否 | - |
 | `language` | 审查评论的语言 | 否 | `zh-CN` |
 
@@ -102,27 +101,9 @@ jobs:
 4. 点击 "New repository secret"
 5. 添加 `OPENROUTER_API_KEY`，值为你的 OpenRouter API Key
 
-### 2. GitHub Token（可选）
+### 2. GitHub Token
 
 **`GITHUB_TOKEN` 是 GitHub Actions 自动提供的，无需手动设置！**
-
-#### 在 GitHub 中的使用方法：
-
-**最简单的方式**：直接在 workflow 文件中使用 `${{ secrets.GITHUB_TOKEN }}`
-
-```yaml
-with:
-  github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub 自动提供，直接使用即可
-  openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
-```
-
-**或者完全省略**：如果省略 `github_token` 参数，代码会自动从环境变量读取
-
-```yaml
-with:
-  # github_token 可以省略
-  openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
-```
 
 #### 重要说明：
 
