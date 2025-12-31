@@ -32,7 +32,7 @@ jobs:
       pull-requests: write
     steps:
       - name: AI Review
-        uses: ./
+        uses: wangyi12358/ai-review-pr@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
@@ -57,7 +57,7 @@ jobs:
       pull-requests: write
     steps:
       - name: AI Review
-        uses: ./
+        uses: wangyi12358/ai-review-pr@v1
         with:
           # github_token 可以省略，会自动从环境变量读取
           # github_token: ${{ secrets.GITHUB_TOKEN }}
