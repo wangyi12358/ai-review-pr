@@ -12,4 +12,3 @@ interface GenerateReviewOptions {
 }
 export declare function generateReviewComment(options: GenerateReviewOptions): Promise<string>;
 export {};
-//# sourceMappingURL=ai.d.ts.map

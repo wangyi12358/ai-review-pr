@@ -15,4 +15,3 @@ interface ReviewOptions {
 }
 export declare function reviewPR(options: ReviewOptions): Promise<number>;
 export {};
-//# sourceMappingURL=review.d.ts.map
