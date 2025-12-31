@@ -53,8 +53,6 @@ export async function reviewPR(options: ReviewOptions): Promise<number> {
     pull_number: prNumber,
   });
 
-  console.log('files', files);
-
   // Filter out ignored files
   const filesToReview = files.filter(file => {
     if (!ignoreFiles || ignoreFiles.length === 0) {
