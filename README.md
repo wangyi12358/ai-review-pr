@@ -4,7 +4,7 @@
 
 ## 功能特性
 
-- 🤖 使用 OpenAI GPT 模型自动审查代码
+- 🤖 使用 OpenRouter AI 模型自动审查代码（支持多种模型：GPT-4、Claude、Gemini 等）
 - 📝 提供详细的代码审查建议
 - 🌍 支持多语言（中文/英文）
 - 🎨 多种审查风格（详细/简洁/友好/严格）
@@ -35,7 +35,7 @@ jobs:
         uses: ./
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+          openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
 ```
 
 ### 高级配置
@@ -58,8 +58,8 @@ jobs:
         uses: ./
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
-          model: gpt-4
+          openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
+          model: openai/gpt-4
           temperature: 0.7
           max_tokens: 2000
           review_style: thorough
@@ -72,8 +72,8 @@ jobs:
 | 参数 | 描述 | 必需 | 默认值 |
 |------|------|------|--------|
 | `github_token` | GitHub token（通常使用 GITHUB_TOKEN） | 否 | `${{ github.token }}` |
-| `openai_api_key` | OpenAI API Key | 是 | - |
-| `model` | OpenAI 模型（如 gpt-4, gpt-3.5-turbo） | 否 | `gpt-4` |
+| `openrouter_api_key` | OpenRouter API Key（从 https://openrouter.ai 获取） | 是 | - |
+| `model` | 模型名称（如 openai/gpt-4, openai/gpt-3.5-turbo, anthropic/claude-3-sonnet）<br>查看 [可用模型列表](https://openrouter.ai/models) | 否 | `openai/gpt-4` |
 | `temperature` | AI 模型的温度参数（0-1） | 否 | `0.7` |
 | `max_tokens` | AI 响应的最大 token 数 | 否 | `2000` |
 | `review_style` | 审查风格（thorough/concis e/friendly/strict） | 否 | `thorough` |
@@ -91,9 +91,19 @@ jobs:
 
 在你的 GitHub 仓库中，需要设置以下 Secret：
 
-1. 进入仓库 Settings → Secrets and variables → Actions
-2. 点击 "New repository secret"
-3. 添加 `OPENAI_API_KEY`，值为你的 OpenAI API Key
+1. 访问 [OpenRouter](https://openrouter.ai) 并注册/登录账户
+2. 在 OpenRouter 控制台生成 API Key
+3. 进入 GitHub 仓库 Settings → Secrets and variables → Actions
+4. 点击 "New repository secret"
+5. 添加 `OPENROUTER_API_KEY`，值为你的 OpenRouter API Key
+
+### 为什么使用 OpenRouter？
+
+OpenRouter 是一个统一的 AI 模型 API 网关，支持多种模型：
+- **OpenAI**: GPT-4, GPT-3.5-turbo 等
+- **Anthropic**: Claude 3 Sonnet, Claude 3 Opus 等
+- **Google**: Gemini Pro 等
+- 更多模型请查看 [OpenRouter 模型列表](https://openrouter.ai/models)
 
 ## 开发
 

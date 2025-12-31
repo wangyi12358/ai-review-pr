@@ -1,9 +1,9 @@
-import { Octokit } from '@actions/github';
+import { getOctokit } from '@actions/github';
 import OpenAI from 'openai';
 import { generateReviewComment } from './ai';
 
 interface ReviewOptions {
-  octokit: Octokit;
+  octokit: ReturnType<typeof getOctokit>;
   openai: OpenAI;
   owner: string;
   repo: string;

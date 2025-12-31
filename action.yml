@@ -6,13 +6,13 @@ inputs:
   github_token:
     description: 'GitHub token (usually GITHUB_TOKEN)'
     required: false
-  openai_api_key:
-    description: 'OpenAI API Key'
+  openrouter_api_key:
+    description: 'OpenRouter API Key (get it from https://openrouter.ai)'
     required: true
   model:
-    description: 'OpenAI model to use (e.g., gpt-4, gpt-3.5-turbo)'
+    description: 'Model to use (e.g., openai/gpt-4, openai/gpt-3.5-turbo, anthropic/claude-3-sonnet). See https://openrouter.ai/models for available models'
     required: false
-    default: 'gpt-4'
+    default: 'openai/gpt-4'
   temperature:
     description: 'Temperature for the AI model (0-1)'
     required: false

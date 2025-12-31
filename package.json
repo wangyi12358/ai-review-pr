@@ -1,7 +1,7 @@
 {
   "name": "ai-review-pr",
   "version": "1.0.0",
-  "description": "GitHub Action for AI-powered PR review",
+  "description": "GitHub Action for AI-powered PR review using OpenRouter",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",

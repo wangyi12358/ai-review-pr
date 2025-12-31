@@ -1,13 +1,14 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 import OpenAI from 'openai';
+// OpenRouter is compatible with OpenAI SDK, just need to set baseURL
 import { reviewPR } from './review';
 
 async function run(): Promise<void> {
   try {
     // Get inputs
-    const openaiApiKey = core.getInput('openai_api_key', { required: true });
-    const model = core.getInput('model') || 'gpt-4';
+    const openrouterApiKey = core.getInput('openrouter_api_key', { required: true });
+    const model = core.getInput('model') || 'openai/gpt-4';
     const temperature = parseFloat(core.getInput('temperature') || '0.7');
     const maxTokens = parseInt(core.getInput('max_tokens') || '2000', 10);
     const reviewStyle = core.getInput('review_style') || 'thorough';
@@ -24,9 +25,14 @@ async function run(): Promise<void> {
     // Initialize GitHub client
     const octokit = github.getOctokit(githubToken);
 
-    // Initialize OpenAI client
+    // Initialize OpenRouter client (compatible with OpenAI SDK)
     const openai = new OpenAI({
-      apiKey: openaiApiKey,
+      apiKey: openrouterApiKey,
+      baseURL: 'https://openrouter.ai/api/v1',
+      defaultHeaders: {
+        'HTTP-Referer': process.env.GITHUB_SERVER_URL || 'https://github.com',
+        'X-Title': 'AI Review PR',
+      },
     });
 
     // Get context

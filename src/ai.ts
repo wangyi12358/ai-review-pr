@@ -1,4 +1,5 @@
 import OpenAI from 'openai';
+// OpenRouter is compatible with OpenAI SDK
 
 interface GenerateReviewOptions {
   openai: OpenAI;
