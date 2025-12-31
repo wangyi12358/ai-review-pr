@@ -26,11 +26,18 @@ pnpm run package
 
 在你的 GitHub 仓库中设置 OpenRouter API Key：
 
-1. 访问 [OpenRouter](https://openrouter.ai) 并注册/登录账户
-2. 在 OpenRouter 控制台生成 API Key
-3. 进入 GitHub 仓库：Settings → Secrets and variables → Actions
-4. 点击 "New repository secret"
-5. 添加 `OPENROUTER_API_KEY`，值为你的 OpenRouter API Key
+1. **访问 OpenRouter**：访问 [OpenRouter](https://openrouter.ai) 并注册/登录账户
+2. **生成 API Key**：在 OpenRouter 控制台生成 API Key
+3. **进入 GitHub 仓库设置**：
+   - 在 GitHub 仓库页面，点击 **Settings**（设置）
+   - 左侧菜单选择 **Secrets and variables** → **Actions**
+4. **添加 Secret**：
+   - 点击 **New repository secret**（新建仓库密钥）
+   - **Name**: 输入 `OPENROUTER_API_KEY`
+   - **Value**: 粘贴你的 OpenRouter API Key
+   - 点击 **Add secret**
+
+> **关于 GITHUB_TOKEN**：无需手动配置！GitHub 会自动提供 `GITHUB_TOKEN`，直接在 workflow 中使用 `${{ secrets.GITHUB_TOKEN }}` 即可。
 
 ## 5. 创建 Workflow
 
@@ -56,7 +63,8 @@ jobs:
       - name: AI Review PR
         uses: ./
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # github_token 可以省略，代码会自动从环境变量读取
+          # github_token: ${{ secrets.GITHUB_TOKEN }}
           openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
           model: openai/gpt-4
 ```

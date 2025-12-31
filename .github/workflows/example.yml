@@ -19,7 +19,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
-          model: openai/gpt-4
+          model: tngtech/deepseek-r1t2-chimera:free
           temperature: 0.7
           max_tokens: 2000
           review_style: thorough

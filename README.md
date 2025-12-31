@@ -34,9 +34,12 @@ jobs:
       - name: AI Review
         uses: ./
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # github_token 可以省略，会自动从环境变量读取
+          # github_token: ${{ secrets.GITHUB_TOKEN }}
           openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
 ```
+
+> **提示**：`GITHUB_TOKEN` 是 GitHub Actions 自动提供的，无需手动设置。如果省略 `github_token` 参数，代码会自动从环境变量读取。
 
 ### 高级配置
 
@@ -57,7 +60,8 @@ jobs:
       - name: AI Review
         uses: ./
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # github_token 可以省略，会自动从环境变量读取
+          # github_token: ${{ secrets.GITHUB_TOKEN }}
           openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
           model: openai/gpt-4
           temperature: 0.7
@@ -71,7 +75,7 @@ jobs:
 
 | 参数 | 描述 | 必需 | 默认值 |
 |------|------|------|--------|
-| `github_token` | GitHub token（通常使用 GITHUB_TOKEN） | 否 | `${{ github.token }}` |
+| `github_token` | GitHub token（通常使用 GITHUB_TOKEN）<br>**注意**：GitHub Actions 会自动提供 `GITHUB_TOKEN`，无需手动设置。可以省略此参数，代码会自动从环境变量读取。 | 否 | 自动从环境变量 `GITHUB_TOKEN` 读取 |
 | `openrouter_api_key` | OpenRouter API Key（从 https://openrouter.ai 获取） | 是 | - |
 | `model` | 模型名称（如 openai/gpt-4, openai/gpt-3.5-turbo, anthropic/claude-3-sonnet）<br>查看 [可用模型列表](https://openrouter.ai/models) | 否 | `openai/gpt-4` |
 | `temperature` | AI 模型的温度参数（0-1） | 否 | `0.7` |
@@ -91,11 +95,44 @@ jobs:
 
 在你的 GitHub 仓库中，需要设置以下 Secret：
 
+### 1. OpenRouter API Key（必需）
+
 1. 访问 [OpenRouter](https://openrouter.ai) 并注册/登录账户
 2. 在 OpenRouter 控制台生成 API Key
 3. 进入 GitHub 仓库 Settings → Secrets and variables → Actions
 4. 点击 "New repository secret"
 5. 添加 `OPENROUTER_API_KEY`，值为你的 OpenRouter API Key
+
+### 2. GitHub Token（可选）
+
+**`GITHUB_TOKEN` 是 GitHub Actions 自动提供的，无需手动设置！**
+
+#### 在 GitHub 中的使用方法：
+
+**最简单的方式**：直接在 workflow 文件中使用 `${{ secrets.GITHUB_TOKEN }}`
+
+```yaml
+with:
+  github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub 自动提供，直接使用即可
+  openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
+```
+
+**或者完全省略**：如果省略 `github_token` 参数，代码会自动从环境变量读取
+
+```yaml
+with:
+  # github_token 可以省略
+  openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
+```
+
+#### 重要说明：
+
+- ✅ **无需在 GitHub Secrets 中添加** - `GITHUB_TOKEN` 是系统自动提供的
+- ✅ **无需手动创建** - GitHub Actions 会在每次运行时自动创建
+- ✅ **自动过期** - 每次运行结束后自动失效，安全性高
+- ✅ **权限自动配置** - 根据 workflow 中的 `permissions` 自动授予权限
+
+> **只有在需要跨仓库访问或特殊权限时，才需要创建 Personal Access Token**。详情请查看 [GitHub Token 文档](./docs/GITHUB_TOKEN.md)。
 
 ### 为什么使用 OpenRouter？
 
