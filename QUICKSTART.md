@@ -63,8 +63,7 @@ jobs:
       - name: AI Review PR
         uses: ./
         with:
-          # github_token 可以省略，代码会自动从环境变量读取
-          # github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
           model: openai/gpt-4
 ```

@@ -34,8 +34,7 @@ jobs:
       - name: AI Review
         uses: ./
         with:
-          # github_token 可以省略，会自动从环境变量读取
-          # github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           openrouter_api_key: ${{ secrets.OPENROUTER_API_KEY }}
 ```
 

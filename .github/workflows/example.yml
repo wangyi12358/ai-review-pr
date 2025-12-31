@@ -24,3 +24,4 @@ jobs:
           max_tokens: 2000
           review_style: thorough
           language: zh-CN
+          ignore_files: "*.md,*.json,*.lock,dist/**"
