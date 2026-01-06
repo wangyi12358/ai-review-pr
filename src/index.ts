@@ -14,6 +14,12 @@ async function run(): Promise<void> {
     const reviewStyle = core.getInput('review_style') || 'thorough';
     const ignoreFiles = core.getInput('ignore_files') || '';
     const language = core.getInput('language') || 'zh-CN';
+    const batchSize = parseInt(core.getInput('batch_size') || '3', 10);
+
+    if (batchSize < 1) {
+      core.setFailed('batch_size must be greater than 0');
+      return;
+    }
 
     // Get GitHub token
     const githubToken = core.getInput('github_token') || process.env.GITHUB_TOKEN;
@@ -59,6 +65,7 @@ async function run(): Promise<void> {
       reviewStyle,
       ignoreFiles: ignoreFiles.split(',').map((f: string) => f.trim()).filter((f: string) => f),
       language,
+      batchSize,
     });
 
     // Set output

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.reviewPR = reviewPR;
 const ai_1 = require("./ai");
 async function reviewPR(options) {
-    const { octokit, openai, owner, repo, prNumber, model, temperature, maxTokens, reviewStyle, ignoreFiles, language, } = options;
+    const { octokit, openai, owner, repo, prNumber, model, temperature, maxTokens, reviewStyle, ignoreFiles, language, batchSize, } = options;
     // Get PR details
     const { data: pr } = await octokit.rest.pulls.get({
         owner,
@@ -40,7 +40,6 @@ async function reviewPR(options) {
     }));
     let totalComments = 0;
     // Review each file (or batch small files together)
-    const batchSize = 3;
     for (let i = 0; i < fileDiffs.length; i += batchSize) {
         const batch = fileDiffs.slice(i, i + batchSize);
         // Skip deleted files

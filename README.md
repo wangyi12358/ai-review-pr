@@ -67,6 +67,7 @@ jobs:
           review_style: thorough
           ignore_files: "*.md,*.json,*.lock"
           language: zh-CN
+          batch_size: 3
 ```
 
 ## 输入参数
@@ -81,6 +82,7 @@ jobs:
 | `review_style` | 审查风格 | 否 | `thorough` |
 | `ignore_files` | 要忽略的文件模式（逗号分隔） | 否 | - |
 | `language` | 审查评论的语言 | 否 | `zh-CN` |
+| `batch_size` | 批量处理的文件数量（每次一起审查的文件数） | 否 | `3` |
 
 ## 审查风格
 

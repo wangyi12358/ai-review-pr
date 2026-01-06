@@ -35780,6 +35780,11 @@ async function run() {
         const reviewStyle = core.getInput('review_style') || 'thorough';
         const ignoreFiles = core.getInput('ignore_files') || '';
         const language = core.getInput('language') || 'zh-CN';
+        const batchSize = parseInt(core.getInput('batch_size') || '3', 10);
+        if (batchSize < 1) {
+            core.setFailed('batch_size must be greater than 0');
+            return;
+        }
         // Get GitHub token
         const githubToken = core.getInput('github_token') || process.env.GITHUB_TOKEN;
         if (!githubToken) {
@@ -35818,6 +35823,7 @@ async function run() {
             reviewStyle,
             ignoreFiles: ignoreFiles.split(',').map((f) => f.trim()).filter((f) => f),
             language,
+            batchSize,
         });
         // Set output
         core.setOutput('review_comments', reviewComments.toString());
@@ -35846,7 +35852,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.reviewPR = reviewPR;
 const ai_1 = __nccwpck_require__(4422);
 async function reviewPR(options) {
-    const { octokit, openai, owner, repo, prNumber, model, temperature, maxTokens, reviewStyle, ignoreFiles, language, } = options;
+    const { octokit, openai, owner, repo, prNumber, model, temperature, maxTokens, reviewStyle, ignoreFiles, language, batchSize, } = options;
     // Get PR details
     const { data: pr } = await octokit.rest.pulls.get({
         owner,
@@ -35883,7 +35889,6 @@ async function reviewPR(options) {
     }));
     let totalComments = 0;
     // Review each file (or batch small files together)
-    const batchSize = 3;
     for (let i = 0; i < fileDiffs.length; i += batchSize) {
         const batch = fileDiffs.slice(i, i + batchSize);
         // Skip deleted files

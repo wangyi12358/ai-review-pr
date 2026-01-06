@@ -14,6 +14,7 @@ interface ReviewOptions {
   reviewStyle: string;
   ignoreFiles: string[];
   language: string;
+  batchSize: number;
 }
 
 interface FileDiff {
@@ -37,6 +38,7 @@ export async function reviewPR(options: ReviewOptions): Promise<number> {
     reviewStyle,
     ignoreFiles,
     language,
+    batchSize,
   } = options;
 
   // Get PR details
@@ -81,7 +83,6 @@ export async function reviewPR(options: ReviewOptions): Promise<number> {
   let totalComments = 0;
 
   // Review each file (or batch small files together)
-  const batchSize = 3;
   for (let i = 0; i < fileDiffs.length; i += batchSize) {
     const batch = fileDiffs.slice(i, i + batchSize);
     

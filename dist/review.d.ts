@@ -12,6 +12,7 @@ interface ReviewOptions {
     reviewStyle: string;
     ignoreFiles: string[];
     language: string;
+    batchSize: number;
 }
 export declare function reviewPR(options: ReviewOptions): Promise<number>;
 export {};
